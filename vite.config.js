@@ -13,6 +13,15 @@ export default defineConfig({
         tailwindcss(),
     ],
     server: {
+        host: '0.0.0.0',
+        port: 5173,
+        strictPort: true,
+        https: false,
         cors: true,
+        hmr: {
+            protocol: 'wss',
+            clientPort: 443,
+            host: 'vite-livewire.gametrack.ro' // Domeniul Cloudflare Tunnel
+        }
     },
 });
