@@ -67,7 +67,7 @@
         <flux:dropdown position="top" align="end">
             <flux:profile
                 class="cursor-pointer"
-                :initials="auth()->user()->initials()"
+                :avatar="auth()->user()->photo_url"
             />
 
             <flux:menu>
@@ -78,7 +78,7 @@
                                     <span
                                         class="flex h-full w-full items-center justify-center rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white"
                                     >
-                                        {{ auth()->user()->initials() }}
+                                        <img src="{{ auth()->user()->photo_url }}">
                                     </span>
                                 </span>
 

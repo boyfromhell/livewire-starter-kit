@@ -5,10 +5,15 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
 use Livewire\Volt\Component;
+use Livewire\WithFileUploads;
 
 new class extends Component {
+
+    use WithFileUploads;
+
     public string $name = '';
     public string $email = '';
+    public $photo;
 
     /**
      * Mount the component.
@@ -17,6 +22,7 @@ new class extends Component {
     {
         $this->name = Auth::user()->name;
         $this->email = Auth::user()->email;
+        $this->photo = Auth::user()->photo;
     }
 
     /**
@@ -37,9 +43,15 @@ new class extends Component {
                 'max:255',
                 Rule::unique(User::class)->ignore($user->id)
             ],
+            'photo' => ['nullable', 'image', 'max:2048']
         ]);
 
         $user->fill($validated);
+
+        if ($this->photo) {
+            $path = $this->photo->store('avatars', 'public'); // Store in `storage/app/public/avatars`
+            $user->photo = $path;
+        }
 
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;
@@ -74,17 +86,31 @@ new class extends Component {
 
     <x-settings.layout :heading="__('Profile')" :subheading="__('Update your name and email address')">
         <form wire:submit="updateProfileInformation" class="my-6 w-full space-y-6">
-            <flux:input wire:model="name" :label="__('Name')" type="text" name="name" required autofocus autocomplete="name" />
+            <div class="flex flex-wrap">
+                <div class="w-full md:w-1/2">
+                    <flux:input wire:model="photo" :label="__('Avatar')" type="file" name="photo"/>
+                </div>
+                <div class="w-full md:w-1/2">
+{{--                    @if ($photo->temporaryUrl())--}}
+{{--                        <img src="{{ $photo->temporaryUrl() }}" class="h-16 w-16 object-cover rounded-full" alt="">--}}
+{{--                    @endif--}}
+                </div>
+            </div>
+
+            <flux:input wire:model="name" :label="__('Name')" type="text" name="name" required autofocus
+                        autocomplete="name"/>
 
             <div>
-                <flux:input wire:model="email" :label="__('Email')" type="email" name="email" required autocomplete="email" />
+                <flux:input wire:model="email" :label="__('Email')" type="email" name="email" required
+                            autocomplete="email"/>
 
                 @if (auth()->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail &&! auth()->user()->hasVerifiedEmail())
                     <div>
                         <flux:text class="mt-4">
                             {{ __('Your email address is unverified.') }}
 
-                            <flux:link class="text-sm cursor-pointer" wire:click.prevent="resendVerificationNotification">
+                            <flux:link class="text-sm cursor-pointer"
+                                       wire:click.prevent="resendVerificationNotification">
                                 {{ __('Click here to re-send the verification email.') }}
                             </flux:link>
                         </flux:text>
@@ -109,6 +135,6 @@ new class extends Component {
             </div>
         </form>
 
-        <livewire:settings.delete-user-form />
+        <livewire:settings.delete-user-form/>
     </x-settings.layout>
 </section>

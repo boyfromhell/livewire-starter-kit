@@ -33,7 +33,7 @@
             <flux:dropdown position="bottom" align="start">
                 <flux:profile
                     :name="auth()->user()->name"
-                    :initials="auth()->user()->initials()"
+                    :avatar="auth()->user()->photo_url"
                     icon-trailing="chevrons-up-down"
                 />
 
@@ -45,7 +45,7 @@
                                     <span
                                         class="flex h-full w-full items-center justify-center rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white"
                                     >
-                                        {{ auth()->user()->initials() }}
+                                        <img src="{{ auth()->user()->photo_url }}" alt="">
                                     </span>
                                 </span>
 
@@ -95,7 +95,7 @@
                                     <span
                                         class="flex h-full w-full items-center justify-center rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white"
                                     >
-                                        {{ auth()->user()->initials() }}
+                                        <img src="{{ auth()->user()->photo_url }}" alt="">
                                     </span>
                                 </span>
 
