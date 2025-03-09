@@ -155,10 +155,10 @@
 {{--    </flux:navlist>--}}
 </flux:sidebar>
 
-{{ $slot }}
+   {{ $slot }}
 
 <flux:footer container>
-    footer
+    @include('partials.footer')
 </flux:footer>
 
 @fluxScripts
