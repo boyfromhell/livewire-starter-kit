@@ -2,7 +2,7 @@
     <div class="mx-auto max-w-screen-xl">
         <hr class="my-6 border-zinc-200 sm:mx-auto dark:border-zinc-700 lg:my-8" />
         <div class="sm:flex sm:items-center sm:justify-between">
-            <span class="text-sm text-zinc-500 sm:text-center dark:text-zinc-400">© 2022 <a href="https://flowbite.com" class="hover:underline">Flowbite™</a>. All Rights Reserved.
+            <span class="text-sm text-zinc-500 sm:text-center dark:text-zinc-400">© 2022 <a href="{{ route('home') }}" class="hover:underline">{{ config('app.name') }}™️</a>. All Rights Reserved.
             </span>
             <div class="flex mt-4 space-x-2 sm:justify-center sm:mt-0">
                 <a href="#" class="text-zinc-500 hover:text-zinc-900 dark:hover:text-white">
