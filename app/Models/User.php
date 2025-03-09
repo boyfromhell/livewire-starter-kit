@@ -70,6 +70,6 @@ class User extends Authenticatable implements FilamentUser
 
     public function getPhotoUrlAttribute()
     {
-        return $this->photo ? asset('storage/' . $this->photo) : asset('default-avatar.png');
+        return $this->photo ? asset('storage/' . $this->photo) : asset('defaultuser.jpg');
     }
 }
